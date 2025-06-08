@@ -5,9 +5,9 @@ import os
 
 # CONFIGURATION
 symbols = ["RELIANCE.NS", "TCS.NS", "INFY.NS"]  # List of stock symbols
-period = "10y"        # Change to "1mo", "1d", etc.
+period = "1y"        # Change to "1mo", "1d", etc.
 interval = "1d"      # Change to "1d", "1h", "15m", etc.
-output_dir = "candles"  # Output folder
+output_dir = "E:\Kannabiran\stocks\src\Data"  # Output folder
 
 # Make output directory if not exists
 os.makedirs(output_dir, exist_ok=True)

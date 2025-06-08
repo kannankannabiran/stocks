@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react";
 import CandlestickChart from "./CandlestickChart";
-import Reliance from './candles/RELIANCE.json';
+import Reliance from './Data/RELIANCE.json';
 
 const sampleData = Reliance;
 
