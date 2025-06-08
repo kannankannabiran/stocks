@@ -4,12 +4,12 @@ import json
 import os
 
 # CONFIGURATION
-symbols = ["RELIANCE.NS", "TCS.NS", "INFY.NS"]  # List of stock symbols
-period = "1y"        # Change to "1mo", "1d", etc.
-interval = "1d"      # Change to "1d", "1h", "15m", etc.
-output_dir = "E:\Kannabiran\stocks\src\Data"  # Output folder
+symbols = ["RELIANCE.NS", "TCS.NS", "INFY.NS" , "DLF.NS", "ITC.NS", "HAL.NS", "PEL.NS", "MANAPPURAM.NS", "IDFCFIRSTB.NS", "ICICIGI.NS", "AARTIPHARM.NS", "BAJFINANCE.NS"]
+period = "1y"        # Example: "1mo", "5d", "1y"
+interval = "1d"      # Example: "1d", "5m", "1h"
+output_dir = "E:\Kannabiran\stocks\src\Data"  # Use double backslashes in Windows paths
 
-# Make output directory if not exists
+# Create output directory if it doesn't exist
 os.makedirs(output_dir, exist_ok=True)
 
 for symbol in symbols:
@@ -21,9 +21,9 @@ for symbol in symbols:
             print(f"No data for {symbol}, skipping.")
             continue
 
-        # Use 'Datetime' for intraday intervals, 'Date' for daily
+        # Use 'Datetime' if intraday, otherwise 'Date'
         time_col = 'Datetime' if 'm' in interval or 'h' in interval else 'Date'
-        formatted = data.reset_index()[[time_col, 'Open', 'High', 'Low', 'Close']]
+        formatted = data.reset_index()[[time_col, 'Open', 'High', 'Low', 'Close', 'Volume']]
         formatted[time_col] = pd.to_datetime(formatted[time_col]).dt.strftime('%Y-%m-%dT%H:%M:%S')
 
         json_data = [
@@ -32,15 +32,17 @@ for symbol in symbols:
                 "open": row["Open"],
                 "high": row["High"],
                 "low": row["Low"],
-                "close": row["Close"]
-            } for _, row in formatted.iterrows()
+                "close": row["Close"],
+                "volume": row["Volume"]
+            }
+            for _, row in formatted.iterrows()
         ]
 
         filename = os.path.join(output_dir, f"{symbol.split('.')[0]}.json")
         with open(filename, "w") as f:
             json.dump(json_data, f, indent=2)
 
-        print(f"Saved {interval} data for {symbol} to {filename}")
+        print(f"Saved {interval} data with volume for {symbol} to {filename}")
 
     except Exception as e:
         print(f"Error fetching data for {symbol}: {e}")
