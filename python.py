@@ -4,7 +4,7 @@ import json
 import os
 
 # CONFIGURATION
-symbols = ["RELIANCE.NS", "TCS.NS", "INFY.NS" , "DLF.NS", "ITC.NS", "HAL.NS", "PEL.NS", "MANAPPURAM.NS", "IDFCFIRSTB.NS", "ICICIGI.NS", "AARTIPHARM.NS", "BAJFINANCE.NS"]
+symbols = ["RELIANCE.NS", "TCS.NS", "INFY.NS" , "DLF.NS", "ITC.NS", "HAL.NS", "PEL.NS", "MANAPPURAM.NS", "IDFCFIRSTB.NS", "ICICIGI.NS", "AARTIPHARM.NS", "BAJFINANCE.NS", "CANFINHOME.NS"]
 period = "1y"        # Example: "1mo", "5d", "1y"
 interval = "1d"      # Example: "1d", "5m", "1h"
 output_dir = "E:\Kannabiran\stocks\src\Data"  # Use double backslashes in Windows paths
