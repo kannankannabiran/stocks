@@ -62,23 +62,26 @@ def scan_vwap_trends():
 
             current_vwap = yearly_vwap.loc[latest_year, "VWAP"]
             prev_vwaps = [yearly_vwap.loc[y, "VWAP"] for y in previous_years]
+            last_close = df["Close"][-1]
 
-            # Decline condition: current VWAP < all previous VWAPs
-            if all(prev > current_vwap for prev in prev_vwaps):
+            # Decline condition: current VWAP < all previous VWAPs and last close > current VWAP
+            if all(prev > current_vwap for prev in prev_vwaps) and last_close > current_vwap:
                 result_decline.append({
                     "symbol": symbol,
                     "current_year": int(latest_year),
                     "current_year_vwap": round(current_vwap, 2),
+                    "last_price": round(last_close, 2),
                     "previous_years": {str(y): round(yearly_vwap.loc[y, "VWAP"], 2) for y in previous_years},
                     "trend": "decline"
                 })
 
-            # Rise condition: current VWAP > all previous VWAPs
-            if all(prev < current_vwap for prev in prev_vwaps):
+            # Rise condition: current VWAP > all previous VWAPs and last close > current VWAP
+            if all(prev < current_vwap for prev in prev_vwaps) and last_close > current_vwap:
                 result_rise.append({
                     "symbol": symbol,
                     "current_year": int(latest_year),
                     "current_year_vwap": round(current_vwap, 2),
+                    "last_price": round(last_close, 2),
                     "previous_years": {str(y): round(yearly_vwap.loc[y, "VWAP"], 2) for y in previous_years},
                     "trend": "rise"
                 })
