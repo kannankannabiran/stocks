@@ -1,0 +1,87 @@
+.scanner-container {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.scanner-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.scanner-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.scanner-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.scanner-button:hover {
+  background-color: #0056b3;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.scanner-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.scanner-table th,
+.scanner-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.scanner-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.rise-row {
+  background-color: #e6f9ea;
+}
+
+.decline-row {
+  background-color: #fdeaea;
+}
+
+.trend-up {
+  color: green;
+  font-weight: bold;
+}
+
+.trend-down {
+  color: red;
+  font-weight: bold;
+}
+
+.no-result {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+}
+.scanner-table th, .scanner-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}

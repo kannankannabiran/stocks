@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+.chart-btn,
+.scanner-btn {
+  margin: 10px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.chart-btn {
+  background-color: #16a34a; /* green-600 */
+}
+
+.chart-btn:hover {
+  background-color: #15803d; /* green-700 */
+}
+
+.scanner-btn {
+  background-color: #2563eb; /* blue-600 */
+}
+
+.scanner-btn:hover {
+  background-color: #1e40af; /* blue-800 */
+}

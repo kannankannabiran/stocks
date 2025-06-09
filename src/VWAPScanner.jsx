@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./VWAPScanner.css";
 
 function VWAPScanner() {
   const [results, setResults] = useState({ decline: [], rise: [] });
@@ -17,49 +18,45 @@ function VWAPScanner() {
     setLoading(false);
   };
 
-  return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">VWAP Trend Scanner</h1>
+  const today = new Date().toLocaleDateString("en-IN");
 
-      <div className="flex justify-center mb-6">
-        <button
-          onClick={handleScan}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition duration-200"
-        >
+  return (
+    <div className="scanner-container">
+      <h1 className="scanner-title">VWAP Trend Scanner</h1>
+
+      <div className="scanner-button-wrapper">
+        <button onClick={handleScan} className="scanner-button">
           {loading ? "Scanning..." : "Scan"}
         </button>
       </div>
 
       {(results.rise.length > 0 || results.decline.length > 0) && (
-        <div className="overflow-x-auto">
-          <table className="table-auto w-full border border-gray-300 shadow-lg rounded-lg overflow-hidden">
-            <thead className="bg-gray-100">
+        <div className="table-wrapper">
+          <table className="scanner-table">
+            <thead>
               <tr>
-                <th className="border px-4 py-2 text-left">Symbol</th>
-                <th className="border px-4 py-2 text-left">VWAP (₹)</th>
-                <th className="border px-4 py-2 text-left">Year</th>
-                <th className="border px-4 py-2 text-left">Trend</th>
+                <th>S.No</th>
+                <th>Symbol</th>
+                <th>VWAP (₹)</th>
+                <th>Year</th>
+                <th>Date</th>
+                <th>Trend</th>
               </tr>
             </thead>
             <tbody>
-              {results.rise.map((stock, index) => (
-                <tr key={"rise" + index} className="bg-green-50 hover:bg-green-100">
-                  <td className="border px-4 py-2 font-semibold text-green-800">
-                    {stock.symbol.replace(".NS", "")}
+              {[...results.rise, ...results.decline].map((stock, index) => (
+                <tr
+                  key={index}
+                  className={stock.trend === "rise" ? "rise-row" : "decline-row"}
+                >
+                  <td>{index + 1}</td>
+                  <td>{stock.symbol.replace(".NS", "")}</td>
+                  <td>₹{stock.current_year_vwap}</td>
+                  <td>{stock.current_year}</td>
+                  <td>{today}</td>
+                  <td className={stock.trend === "rise" ? "trend-up" : "trend-down"}>
+                    {stock.trend === "rise" ? "↑ Rising" : "↓ Declining"}
                   </td>
-                  <td className="border px-4 py-2">₹{stock.current_year_vwap}</td>
-                  <td className="border px-4 py-2">{stock.current_year}</td>
-                  <td className="border px-4 py-2 text-green-600 font-bold">↑ Rising</td>
-                </tr>
-              ))}
-              {results.decline.map((stock, index) => (
-                <tr key={"decline" + index} className="bg-red-50 hover:bg-red-100">
-                  <td className="border px-4 py-2 font-semibold text-red-800">
-                    {stock.symbol.replace(".NS", "")}
-                  </td>
-                  <td className="border px-4 py-2">₹{stock.current_year_vwap}</td>
-                  <td className="border px-4 py-2">{stock.current_year}</td>
-                  <td className="border px-4 py-2 text-red-600 font-bold">↓ Declining</td>
                 </tr>
               ))}
             </tbody>
@@ -68,7 +65,7 @@ function VWAPScanner() {
       )}
 
       {results.rise.length === 0 && results.decline.length === 0 && !loading && (
-        <p className="text-center text-gray-600 mt-6">No VWAP trend found.</p>
+        <p className="no-result">No VWAP trend found.</p>
       )}
     </div>
   );
