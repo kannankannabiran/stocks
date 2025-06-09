@@ -1,0 +1,4 @@
+
+symbols = [
+    "RELIANCE.NS"
+]
