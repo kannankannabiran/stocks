@@ -27,20 +27,40 @@ function VWAPScanner() {
         {loading ? "Scanning..." : "Scan"}
       </button>
 
-      <ul className="mt-4">
-        {!loading && results.length === 0 && <li>No matching stocks found.</li>}
+      {loading && <p className="mt-4">Scanning stocks...</p>}
 
-        {results.length > 0 && (
-          <>
-            <h2 className="text-green-600 font-semibold mt-4">Strong Stocks (Price Above All Yearly VWAPs):</h2>
-            {results.map((stock, index) => (
-              <li key={index} className="mt-1 text-green-800">
-                <strong>{stock.symbol}</strong>: Price ₹{stock.last_price} > VWAP ₹{stock.current_year_vwap} ({stock.current_year})
-              </li>
-            ))}
-          </>
-        )}
-      </ul>
+      {!loading && results.length === 0 && (
+        <p className="mt-4 text-gray-600">No matching stocks found.</p>
+      )}
+
+      {!loading && results.length > 0 && (
+        <div className="mt-6 overflow-x-auto">
+          <table className="min-w-full border border-gray-400 rounded">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 border border-gray-400 text-left">#</th>
+                <th className="px-4 py-2 border border-gray-400 text-left">Symbol</th>
+                <th className="px-4 py-2 border border-gray-400 text-left">Last Price</th>
+                <th className="px-4 py-2 border border-gray-400 text-left">Current Year VWAP</th>
+                <th className="px-4 py-2 border border-gray-400 text-left">Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((stock, index) => (
+                <tr key={index} className="hover:bg-green-50">
+                  <td className="px-4 py-2 border border-gray-400">{index + 1}</td>
+                  <td className="px-4 py-2 border border-gray-400 font-semibold text-green-700">
+                    {stock.symbol.replace(/\.NS$/, "")}
+                  </td>
+                  <td className="px-4 py-2 border border-gray-400">₹{stock.last_price}</td>
+                  <td className="px-4 py-2 border border-gray-400">₹{stock.current_year_vwap}</td>
+                  <td className="px-4 py-2 border border-gray-400">{stock.current_year}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
