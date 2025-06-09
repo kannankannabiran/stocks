@@ -26,7 +26,8 @@ def calculate_yearly_vwap(df: pd.DataFrame) -> pd.DataFrame:
 
 @app.get("/scan")
 def scan_vwap_trends():
-    result_above_all_vwaps = []
+    result_decline = []
+    result_rise = []
 
     for symbol in symbols:
         try:
@@ -35,6 +36,7 @@ def scan_vwap_trends():
                 print(f"No data for {symbol}")
                 continue
 
+            # Flatten multi-index columns if any
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = df.columns.get_level_values(0)
 
@@ -53,22 +55,32 @@ def scan_vwap_trends():
             latest_year = yearly_vwap.index.max()
             previous_years = [latest_year - i for i in range(1, 5)]
 
+            # Check if we have all previous 4 years in data
             if not all(y in yearly_vwap.index for y in previous_years):
-                print(f"Missing previous years for {symbol}")
+                print(f"Missing some previous years for {symbol}")
                 continue
 
             current_vwap = yearly_vwap.loc[latest_year, "VWAP"]
             prev_vwaps = [yearly_vwap.loc[y, "VWAP"] for y in previous_years]
-            last_price = df["Close"].iloc[-1]
 
-            if all(last_price > vwap for vwap in prev_vwaps + [current_vwap]):
-                result_above_all_vwaps.append({
+            # Decline condition: current VWAP < all previous VWAPs
+            if all(prev > current_vwap for prev in prev_vwaps):
+                result_decline.append({
                     "symbol": symbol,
-                    "last_price": round(last_price, 2),
                     "current_year": int(latest_year),
                     "current_year_vwap": round(current_vwap, 2),
                     "previous_years": {str(y): round(yearly_vwap.loc[y, "VWAP"], 2) for y in previous_years},
-                    "trend": "price_above_all_yearly_vwaps"
+                    "trend": "decline"
+                })
+
+            # Rise condition: current VWAP > all previous VWAPs
+            if all(prev < current_vwap for prev in prev_vwaps):
+                result_rise.append({
+                    "symbol": symbol,
+                    "current_year": int(latest_year),
+                    "current_year_vwap": round(current_vwap, 2),
+                    "previous_years": {str(y): round(yearly_vwap.loc[y, "VWAP"], 2) for y in previous_years},
+                    "trend": "rise"
                 })
 
         except Exception as e:
@@ -76,5 +88,6 @@ def scan_vwap_trends():
             continue
 
     return {
-        "price_above_all_yearly_vwaps": result_above_all_vwaps
+        "decline": result_decline,
+        "rise": result_rise
     }

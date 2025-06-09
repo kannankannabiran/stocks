@@ -1,4 +1,5 @@
 import './App.css';
+import './index.css';
 import React, { useState } from "react";
 import Chart from './chart';
 import VWAPScanner from './VWAPScanner';
