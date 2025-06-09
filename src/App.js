@@ -12,35 +12,12 @@ const App = () => {
       {page === "home" && (
         <>
           <h1>Welcome</h1>
-         <button
-  onClick={() => setPage("chart")}
-  style={{
-    margin: "10px",
-    padding: "10px 20px",
-    backgroundColor: "#16a34a", // Tailwind's green-600
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-  }}
->
-  Chart
-</button>
-
-<button
-  onClick={() => setPage("scanner")}
-  style={{
-    margin: "10px",
-    padding: "10px 20px",
-    backgroundColor: "#2563eb", // Tailwind's blue-600
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-  }}
->
-  Scanner
-</button>
+          <button className="chart-btn" onClick={() => setPage("chart")}>
+          Chart
+        </button>
+        <button className="scanner-btn" onClick={() => setPage("scanner")}>
+          Scanner
+        </button>
         </>
       )}
 
