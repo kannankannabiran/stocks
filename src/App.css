@@ -78,3 +78,7 @@ a.nav-link:hover {
 .custom_margin{
   margin-top: 50px;
 }
+a.navbar-brand{
+  font-size: 24px;
+  font-weight: 800;
+}
