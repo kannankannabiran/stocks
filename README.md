@@ -1,8 +1,8 @@
 # stocks
-#start project
+#npm start
 
 
 
-#python
+#stock 4year low find run this script
 #uvicorn scan_vwap:app --reload
 

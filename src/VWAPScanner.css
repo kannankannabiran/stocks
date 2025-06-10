@@ -85,3 +85,8 @@
   padding: 12px;
   text-align: left;
 }
+.download-button {
+  margin-left: 10px;
+  background-color: #28a745;
+  color: white;
+}
