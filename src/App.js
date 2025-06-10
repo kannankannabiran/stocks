@@ -16,7 +16,7 @@ const Home = () => (
 const App = () => {
   return (
     <Router>
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top mb-5">
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">AK</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -39,6 +39,9 @@ const App = () => {
               <li className="nav-item">
                 <Link className="nav-link" to="/backtest">Backtest</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/algo">Algo</Link>
+              </li>
             </ul>
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
@@ -49,7 +52,7 @@ const App = () => {
         </div>
       </nav>
 
-      <div className="container-fluid mt-4">
+      <div className="container-fluid custom_margin">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chart" element={<Chart />} />
@@ -57,6 +60,7 @@ const App = () => {
           {/* Add placeholder routes */}
           <Route path="/stocks" element={<div>Stocks List Page</div>} />
           <Route path="/backtest" element={<div>Backtest Page</div>} />
+          <Route path="/algo" element={<div>Algo Page</div>} />
           <Route path="/logout" element={<div>Logging out...</div>} />
         </Routes>
       </div>

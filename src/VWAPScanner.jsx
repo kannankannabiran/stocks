@@ -70,7 +70,7 @@ function VWAPScanner() {
 
   return (
     <div className="scanner-container">
-      <h1 className="scanner-title">VWAP Trend Scanner</h1>
+      <h1 className="scanner-title">VWAP Yearly Scanner</h1>
 
       <div className="scanner-button-wrapper">
         <button onClick={handleScan} className="scanner-button">
