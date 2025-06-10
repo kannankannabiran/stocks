@@ -64,3 +64,15 @@
 .scanner-btn:hover {
   background-color: #1e40af; /* blue-800 */
 }
+nav.navbar.navbar-expand-lg.navbar-dark {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, .04), 0 1px 6px rgba(0, 0, 0, .04);
+    background: #007bff;
+    position: relative;
+}
+.nav-link{
+  color: #e2e0e0;
+  font-weight: 600;
+}
+a.nav-link:hover {
+    color: #f79a23;
+}

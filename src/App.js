@@ -4,27 +4,60 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Chart from './chart';
 import VWAPScanner from './VWAPScanner';
+// Import other pages as needed: StocksList, Backtest, Logout
 
 const Home = () => (
-  <div style={{ padding: "20px", textAlign: "center" }}>
+  <div className="container text-center mt-4">
     <h1>Welcome</h1>
-    <Link to="/chart">
-      <button className="chart-btn">Chart</button>
-    </Link>
-    <Link to="/scanner">
-      <button className="scanner-btn">Scanner</button>
-    </Link>
+    <p>Select a page from the navigation bar above.</p>
   </div>
 );
 
 const App = () => {
   return (
     <Router>
-      <div style={{ padding: "20px", textAlign: "center" }}>
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top mb-5">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/">AK</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse justify-content-left" id="navbarNav">
+            <ul className="navbar-nav gap-3">
+              <li className="nav-item">
+                <Link className="nav-link" to="/">Home</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/chart">Chart</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/scanner">Scanner</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/stocks">Stocks List</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/backtest">Backtest</Link>
+              </li>
+            </ul>
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to="/logout">Logout</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div className="container-fluid mt-4">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/scanner" element={<VWAPScanner />} />
+          {/* Add placeholder routes */}
+          <Route path="/stocks" element={<div>Stocks List Page</div>} />
+          <Route path="/backtest" element={<div>Backtest Page</div>} />
+          <Route path="/logout" element={<div>Logging out...</div>} />
         </Routes>
       </div>
     </Router>
