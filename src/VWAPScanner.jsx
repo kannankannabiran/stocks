@@ -20,7 +20,8 @@ function VWAPScanner() {
     setLoading(false);
   };
 
-  const today = new Date().toLocaleDateString("en-IN");
+  // Format: YYYY-MM-DD (safe for filenames)
+  const today = new Date().toISOString().slice(0, 10);
 
   const exportToCSV = (data, filename) => {
     const headers = ["S.No", "Symbol", "VWAP (₹)", "Year", "Date", "Trend"];
@@ -40,7 +41,7 @@ function VWAPScanner() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `${filename}.csv`);
+    link.setAttribute("download", `${filename}_${today}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -62,7 +63,7 @@ function VWAPScanner() {
 
     const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
     const dataBlob = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(dataBlob, `${filename}.xlsx`);
+    saveAs(dataBlob, `${filename}_${today}.xlsx`);
   };
 
   const allResults = [...results.rise, ...results.decline];
