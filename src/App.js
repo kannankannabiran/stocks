@@ -17,7 +17,7 @@ const App = () => {
   return (
     <Router>
       <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div className="container-fluid">
+        <div className="container">
           <Link className="navbar-brand" to="/">AK</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span className="navbar-toggler-icon" />
