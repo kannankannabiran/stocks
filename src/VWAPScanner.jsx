@@ -20,7 +20,6 @@ function VWAPScanner() {
     setLoading(false);
   };
 
-  // Format: YYYY-MM-DD (safe for filenames)
   const today = new Date().toISOString().slice(0, 10);
 
   const exportToCSV = (data, filename) => {
@@ -70,6 +69,12 @@ function VWAPScanner() {
 
   return (
     <div className="scanner-container">
+      {loading && (
+        <div className="spinner-overlay">
+          <div className="spinner"></div>
+        </div>
+      )}
+
       <h1 className="scanner-title">VWAP Yearly Scanner</h1>
 
       <div className="scanner-button-wrapper">
