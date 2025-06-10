@@ -4,5 +4,5 @@
 
 
 #stock 4year low find run this script
-#uvicorn scan_vwap:app --reload
+#uvicorn backend.scan_vwap:app --reload
 
