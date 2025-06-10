@@ -300,5 +300,5 @@ export default function ChartWithIndicators({ data, selectedIndicators }) {
     },
   };
 
-  return <Chart options={options} series={series} type="candlestick" height={700} />;
+  return <Chart options={options} series={series} type="candlestick" height={650} />;
 }
