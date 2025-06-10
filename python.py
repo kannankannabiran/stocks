@@ -6,7 +6,7 @@ import os
 # CONFIGURATION
 from test import symbols 
 
-period = "5y"        # Example: "1mo", "5d", "1y"
+period = "3mo"        # Example: "1mo", "5d", "1y"
 interval = "1d"      # Example: "1d", "5m", "1h"
 output_dir = "E:\Kannabiran\stocks\src\Data"  # Use double backslashes in Windows paths
 
