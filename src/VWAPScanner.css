@@ -90,3 +90,7 @@
   background-color: #28a745;
   color: white;
 }
+.scanner-table>thead>tr>th{
+  background-color: rgb(69, 118, 209);
+  color: #fff;
+}
