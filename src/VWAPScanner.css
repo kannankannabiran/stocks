@@ -94,31 +94,68 @@
   background-color: rgb(69, 118, 209);
   color: #fff;
 }
-/* Spinner Overlay */
-.spinner-overlay {
+
+/* Spinner that covers whole screen */
+.fullscreen-spinner-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.8);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  z-index: 9999;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* Spinner Style */
 .spinner {
-  border: 12px solid #f3f3f3;
-  border-top: 12px solid #3498db;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 60px;
+  height: 60px;
   animation: spin 1s linear infinite;
+  margin-bottom: 20px;
 }
 
-/* Spin Animation */
+.cancel-button {
+  padding: 10px 15px;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Other buttons */
+.scanner-button-wrapper {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.scanner-button {
+  padding: 10px 15px;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.download-button {
+  background-color: #43a047;
+}
+
+.no-result {
+  margin-top: 20px;
+  font-style: italic;
+  color: #999;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

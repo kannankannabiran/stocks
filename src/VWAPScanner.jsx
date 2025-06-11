@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import "./VWAPScanner.css";
@@ -6,21 +6,46 @@ import "./VWAPScanner.css";
 function VWAPScanner() {
   const [results, setResults] = useState({ decline: [], rise: [] });
   const [loading, setLoading] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const abortControllerRef = useRef(null);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const allResults = [...results.rise, ...results.decline];
 
   const handleScan = async () => {
+    if (loading || scanning) return;
     setLoading(true);
+    setScanning(true);
+    abortControllerRef.current = new AbortController();
+
     try {
-      const res = await fetch("http://localhost:8000/scan");
+      const res = await fetch("http://localhost:8000/scan", {
+        signal: abortControllerRef.current.signal,
+      });
+
+      if (!res.ok) throw new Error("Scan request failed");
       const data = await res.json();
       setResults(data);
     } catch (err) {
-      console.error("Error scanning:", err);
-      alert("Failed to fetch VWAP data.");
+      if (err.name === "AbortError") {
+        alert("Scan cancelled.");
+      } else {
+        console.error("Scan error:", err);
+        alert("Failed to fetch VWAP data.");
+      }
+    } finally {
+      setLoading(false);
+      setScanning(false);
     }
-    setLoading(false);
   };
 
-  const today = new Date().toISOString().slice(0, 10);
+  const handleCancel = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      setLoading(false);
+      setScanning(false);
+    }
+  };
 
   const exportToCSV = (data, filename) => {
     const headers = ["S.No", "Symbol", "VWAP (₹)", "Year", "Date", "Trend"];
@@ -65,24 +90,29 @@ function VWAPScanner() {
     saveAs(dataBlob, `${filename}_${today}.xlsx`);
   };
 
-  const allResults = [...results.rise, ...results.decline];
-
   return (
     <div className="scanner-container">
-      {loading && (
-        <div className="spinner-overlay">
+      {(loading || scanning) && (
+        <div className="fullscreen-spinner-overlay">
           <div className="spinner"></div>
+          <button className="cancel-button" onClick={handleCancel}>
+            Cancel Scan
+          </button>
         </div>
       )}
 
       <h1 className="scanner-title">VWAP Yearly Scanner</h1>
 
       <div className="scanner-button-wrapper">
-        <button onClick={handleScan} className="scanner-button">
-          {loading ? "Scanning..." : "Scan"}
+        <button
+          onClick={handleScan}
+          className="scanner-button"
+          disabled={loading || scanning}
+        >
+          {loading || scanning ? "Scanning..." : "Scan"}
         </button>
 
-        {allResults.length > 0 && (
+        {!scanning && allResults.length > 0 && (
           <>
             <button
               onClick={() => exportToCSV(allResults, "VWAP_Trends")}
@@ -100,7 +130,7 @@ function VWAPScanner() {
         )}
       </div>
 
-      {allResults.length > 0 && (
+      {!loading && allResults.length > 0 && (
         <div className="table-wrapper">
           <table className="scanner-table">
             <thead>
@@ -134,7 +164,7 @@ function VWAPScanner() {
         </div>
       )}
 
-      {allResults.length === 0 && !loading && (
+      {!loading && allResults.length === 0 && (
         <p className="no-result">No VWAP trend found.</p>
       )}
     </div>
