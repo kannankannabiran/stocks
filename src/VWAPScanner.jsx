@@ -1,51 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useContext } from "react";
+import { ScanContext } from "./ScanContext";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import "./VWAPScanner.css";
 
 function VWAPScanner() {
-  const [results, setResults] = useState({ decline: [], rise: [] });
-  const [loading, setLoading] = useState(false);
-  const [scanning, setScanning] = useState(false);
-  const abortControllerRef = useRef(null);
+  const { results, loading, scanning, handleScan, cancelScan } = useContext(ScanContext);
 
   const today = new Date().toISOString().slice(0, 10);
   const allResults = [...results.rise, ...results.decline];
-
-  const handleScan = async () => {
-    if (loading || scanning) return;
-    setLoading(true);
-    setScanning(true);
-    abortControllerRef.current = new AbortController();
-
-    try {
-      const res = await fetch("http://localhost:8000/scan", {
-        signal: abortControllerRef.current.signal,
-      });
-
-      if (!res.ok) throw new Error("Scan request failed");
-      const data = await res.json();
-      setResults(data);
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert("Scan cancelled.");
-      } else {
-        console.error("Scan error:", err);
-        alert("Failed to fetch VWAP data.");
-      }
-    } finally {
-      setLoading(false);
-      setScanning(false);
-    }
-  };
-
-  const handleCancel = () => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-      setLoading(false);
-      setScanning(false);
-    }
-  };
 
   const exportToCSV = (data, filename) => {
     const headers = ["S.No", "Symbol", "VWAP (₹)", "Year", "Date", "Trend"];
@@ -95,7 +58,7 @@ function VWAPScanner() {
       {(loading || scanning) && (
         <div className="fullscreen-spinner-overlay">
           <div className="spinner"></div>
-          <button className="cancel-button" onClick={handleCancel}>
+          <button className="cancel-button" onClick={cancelScan}>
             Cancel Scan
           </button>
         </div>
