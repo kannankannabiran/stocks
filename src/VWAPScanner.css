@@ -160,3 +160,15 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.tv-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #007bff;
+  padding: 0;
+}
+
+.tv-button:hover {
+  color: #0056b3;
+}

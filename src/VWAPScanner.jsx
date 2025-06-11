@@ -53,6 +53,12 @@ function VWAPScanner() {
     saveAs(dataBlob, `${filename}_${today}.xlsx`);
   };
 
+  const openTradingView = (symbol) => {
+    const cleanSymbol = symbol.replace(".NS", "");
+    const url = `https://www.tradingview.com/chart/?symbol=NSE:${cleanSymbol}`;
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="scanner-container">
       {(loading || scanning) && (
@@ -104,24 +110,37 @@ function VWAPScanner() {
                 <th>Year</th>
                 <th>Date</th>
                 <th>Trend</th>
+                <th>Chart</th>
               </tr>
             </thead>
             <tbody>
-              {allResults.map((stock, index) => (
-                <tr
-                  key={index}
-                  className={stock.trend === "rise" ? "rise-row" : "decline-row"}
-                >
-                  <td>{index + 1}</td>
-                  <td>{stock.symbol.replace(".NS", "")}</td>
-                  <td>₹{stock.current_year_vwap}</td>
-                  <td>{stock.current_year}</td>
-                  <td>{today}</td>
-                  <td className={stock.trend === "rise" ? "trend-up" : "trend-down"}>
-                    {stock.trend === "rise" ? "↑ Rising" : "↓ Declining"}
-                  </td>
-                </tr>
-              ))}
+              {allResults.map((stock, index) => {
+                const cleanSymbol = stock.symbol.replace(".NS", "");
+                return (
+                  <tr
+                    key={index}
+                    className={stock.trend === "rise" ? "rise-row" : "decline-row"}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{cleanSymbol}</td>
+                    <td>₹{stock.current_year_vwap}</td>
+                    <td>{stock.current_year}</td>
+                    <td>{today}</td>
+                    <td className={stock.trend === "rise" ? "trend-up" : "trend-down"}>
+                      {stock.trend === "rise" ? "↑ Rising" : "↓ Declining"}
+                    </td>
+                    <td>
+                      <button
+                        className="tv-button"
+                        onClick={() => openTradingView(stock.symbol)}
+                        title="Open in TradingView"
+                      >
+                        📈
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
