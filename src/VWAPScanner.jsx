@@ -107,7 +107,6 @@ function VWAPScanner() {
                 <th>S.No</th>
                 <th>Symbol</th>
                 <th>VWAP (₹)</th>
-                <th>Year</th>
                 <th>Date</th>
                 <th>Trend</th>
                 <th>Chart</th>
@@ -124,7 +123,6 @@ function VWAPScanner() {
                     <td>{index + 1}</td>
                     <td>{cleanSymbol}</td>
                     <td>₹{stock.current_year_vwap}</td>
-                    <td>{stock.current_year}</td>
                     <td>{today}</td>
                     <td className={stock.trend === "rise" ? "trend-up" : "trend-down"}>
                       {stock.trend === "rise" ? "↑ Rising" : "↓ Declining"}
