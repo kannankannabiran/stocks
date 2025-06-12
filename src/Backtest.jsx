@@ -16,49 +16,61 @@ const Backtest = () => {
     setLoading(false);
   };
 
+  // ✅ Function to clean symbol (removes .NS or .BO, trims spaces)
+  const cleanSymbol = (symbol) => {
+    return symbol?.toString().replace(/\.(NS|BO)\s*$/i, "").trim();
+  };
+
   return (
     <div className="container mt-4">
       <div className="text-center">
-      <h2>Backtest</h2>
-      <button className="btn btn-primary mb-3" onClick={handleRunBacktest}>
-        Run Backtest
-      </button>
-      
-      {loading && <p>Loading backtest results...</p>}
+        <h2>Backtest</h2>
+        <button className="btn btn-primary mb-3" onClick={handleRunBacktest}>
+          Run Backtest
+        </button>
+        {loading && <p>Loading backtest results...</p>}
       </div>
-      {data.length > 0 && data.map((item) => (
-        <div key={item.symbol} className="mb-4">
-          <h5>{item.symbol} ({item.occurrences} matches)</h5>
-          <table className="table table-bordered table-sm">
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th>Trend</th>
-                <th>Start Date</th>
-                <th>Start Price</th>
-                <th>End Date</th>
-                <th>End Price</th>
-                <th>% Change</th>
-              </tr>
-            </thead>
-            <tbody>
-              {item.details.map((d, index) => (
-                <tr key={index}>
-                  <td>{d.year}</td>
-                  <td>{d.trend}</td>
-                  <td>{d.start_date}</td>
-                  <td>{d.start_price}</td>
-                  <td>{d.end_date}</td>
-                  <td>{d.end_price}</td>
-                  <td style={{ color: d.percent_change >= 0 ? "green" : "red" }}>
-                    {d.percent_change}%
-                  </td>
+
+      {data.length > 0 &&
+        data.map((item) => (
+          <div key={item.symbol} className="mb-4">
+            <h5>
+              {cleanSymbol(item.symbol)} ({item.occurrences} matches)
+            </h5>
+            <table className="table table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Trend</th>
+                  <th>Start Date</th>
+                  <th>Start Price</th>
+                  <th>End Date</th>
+                  <th>End Price</th>
+                  <th>% Change</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ))}
+              </thead>
+              <tbody>
+                {item.details.map((d, index) => (
+                  <tr key={index}>
+                    <td>{d.year}</td>
+                    <td>{d.trend}</td>
+                    <td>{d.start_date}</td>
+                    <td>{d.start_price}</td>
+                    <td>{d.end_date}</td>
+                    <td>{d.end_price}</td>
+                    <td
+                      style={{
+                        color: d.percent_change >= 0 ? "green" : "red",
+                      }}
+                    >
+                      {d.percent_change}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
     </div>
   );
 };
