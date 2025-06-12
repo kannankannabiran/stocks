@@ -4,7 +4,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Chart from './chart';
 import VWAPScanner from './VWAPScanner';
-// Import other pages as needed: StocksList, Backtest, Logout
+import Backtest from './Backtest'; // Make sure you have Backtest.jsx
 
 const Home = () => (
   <div className="container text-center mt-4">
@@ -57,9 +57,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/scanner" element={<VWAPScanner />} />
-          {/* Add placeholder routes */}
           <Route path="/stocks" element={<div>Stocks List Page</div>} />
-          <Route path="/backtest" element={<div>Backtest Page</div>} />
+          <Route path="/backtest" element={<Backtest />} />
           <Route path="/algo" element={<div>Algo Page</div>} />
           <Route path="/logout" element={<div>Logging out...</div>} />
         </Routes>
