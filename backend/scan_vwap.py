@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import yfinance as yf
 import pandas as pd
-from .test import symbols  # Your list of symbols
+from test import symbols  # Your list of symbols
 
 app = FastAPI()
 
